@@ -18,6 +18,22 @@ namespace AdventOfCode2020 {
         }
 
         static void Day01() {
+            var inputs = GetInputs(1, int.Parse);
+            var target = 2020;
+
+            for (var i = 0; i < inputs.Length; i++) {
+                for (var j = i + 1; j < inputs.Length; j++) {
+                    if (inputs[i] + inputs[j] == target) {
+                        Console.WriteLine($"Day 1-1 Answer: {inputs[i] * inputs[j]}");
+                    }
+
+                    for (var k = j + 1; k < inputs.Length; k++) {
+                        if (inputs[i] + inputs[j] + inputs[k] == target) {
+                            Console.WriteLine($"Day 1-2 Answer: {inputs[i] * inputs[j] * inputs[k]}");
+                        }
+                    }
+                }
+            }
         }
         static void Day02() {
         }
