@@ -36,6 +36,34 @@ namespace AdventOfCode2020 {
             }
         }
         static void Day02() {
+            var inputs = GetInputs(2, s => s);
+            var validPart1 = 0;
+            var validPart2 = 0;
+            for (var i = 0; i < inputs.Length; i++) {
+                var l = inputs[i].Split(':', '-', ' ');
+                var min = int.Parse(l[0]);
+                var max = int.Parse(l[1]);
+                var chr = char.Parse(l[2]);
+                var pass = l[4];
+
+                var count = 0;
+                foreach (var c in pass) {
+                    if (c == chr) {
+                        count++;
+                    }
+                }
+
+                if (count >= min && count <= max) {
+                    validPart1++;
+                }
+
+                if (pass[min - 1] == chr ^ pass[max - 1] == chr) {
+                    validPart2++;
+                }
+            }
+
+            Console.WriteLine($"Day 2-1 Answer: {validPart1}");
+            Console.WriteLine($"Day 2-2 Answer: {validPart2}");
         }
 
         static void Day03() {
