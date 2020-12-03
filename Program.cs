@@ -14,7 +14,7 @@ namespace AdventOfCode2020 {
         }
 
         static T[] GetInputs<T>(byte day, Func<string, T> selectFunc) {
-            return File.ReadAllLines($"./input/day-{day}.txt").Where(a => a.Length > 0).Select(selectFunc).ToArray();
+            return File.ReadAllLines($"./input/day-{day:D2}.txt").Where(a => a.Length > 0).Select(selectFunc).ToArray();
         }
 
         static void Day01() {
