@@ -67,6 +67,29 @@ namespace AdventOfCode2020 {
         }
 
         static void Day03() {
+            var inputs = GetInputs(3, s => s);
+            var multiple = 1UL;
+            var yy = 1;
+            for (var xx = 1; xx < 9; xx += 2) {
+                var x = 0;
+                var treesHit = 0UL;
+                for (var y = 0; y < inputs.Length; y += yy) {
+                    if (inputs[y][x] == '#') treesHit++;
+                    x = (x + xx) % inputs[y].Length;
+                }
+
+                if (xx == 3 && yy == 1) {
+                    Console.WriteLine($"Day 3-1 Answer: {treesHit}");
+                }
+
+                multiple *= treesHit;
+                if (yy == 2) break;
+                if (xx != 7) continue;
+                xx = -1;
+                yy++;
+            }
+
+            Console.WriteLine($"Day 3-2 Answer: {multiple}");
         }
 
         static void Day04() {
