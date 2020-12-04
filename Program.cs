@@ -13,8 +13,12 @@ namespace AdventOfCode2020 {
             Console.ReadKey();
         }
 
-        static T[] GetInputs<T>(byte day, Func<string, T> selectFunc) {
-            return File.ReadAllLines($"./input/day-{day:D2}.txt").Where(a => a.Length > 0).Select(selectFunc).ToArray();
+        static T[] GetInputs<T>(byte day, Func<string, T> selectFunc, bool blankLines = false) {
+            return GetInputs(day, blankLines).Select(selectFunc).ToArray();
+        }
+
+        static string[] GetInputs(byte day, bool blankLines = false) {
+            return File.ReadAllLines($"./input/day-{day:D2}.txt").Where(a => blankLines || a.Length > 0).ToArray();
         }
 
         static void Day01() {
@@ -36,7 +40,7 @@ namespace AdventOfCode2020 {
             }
         }
         static void Day02() {
-            var inputs = GetInputs(2, s => s);
+            var inputs = GetInputs(2);
             var validPart1 = 0;
             var validPart2 = 0;
             for (var i = 0; i < inputs.Length; i++) {
@@ -67,7 +71,7 @@ namespace AdventOfCode2020 {
         }
 
         static void Day03() {
-            var inputs = GetInputs(3, s => s);
+            var inputs = GetInputs(3);
             var multiple = 1UL;
             var yy = 1;
             for (var xx = 1; xx < 9; xx += 2) {
@@ -93,7 +97,7 @@ namespace AdventOfCode2020 {
         }
 
         static void Day04() {
-            var inputs = File.ReadAllLines($"./input/day-04.txt").ToArray();
+            var inputs = GetInputs(4, true);
             var valid = 0;
             var valid2 = 0;
 
