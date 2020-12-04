@@ -93,6 +93,82 @@ namespace AdventOfCode2020 {
         }
 
         static void Day04() {
+            var inputs = File.ReadAllLines($"./input/day-04.txt").ToArray();
+            var valid = 0;
+            var valid2 = 0;
+
+            var fields = new System.Collections.Generic.Dictionary<string, bool?> {
+                { "byr", null}, { "iyr", null},
+                { "eyr", null}, { "hgt", null},
+                { "hcl", null}, { "ecl", null},
+                { "pid", null}, { "cid", null},
+            };
+            
+            for (var i = 0; i <= inputs.Length; i++) {
+                if (i >= inputs.Length || inputs[i].Length == 0) {
+                    if (fields.All(kvp => kvp.Key == "cid" || kvp.Value.HasValue)) valid++;
+                    if (fields.All(kvp => kvp.Key == "cid" || kvp.Value != null && kvp.Value.Value)) valid2++;
+                    foreach (var k in fields.Keys.ToArray()) {
+                        fields[k] = null;
+                    }
+                    continue;
+                }
+
+                foreach (var kvp in inputs[i].Split(' ').Select(a => a.Split(':'))) {
+                    if (fields.ContainsKey(kvp[0])) {
+                        fields[kvp[0]] = false;
+
+                        switch (kvp[0]) {
+                            case "byr": {
+                                if (int.TryParse(kvp[1], out var val)) {
+                                    fields[kvp[0]] = val >= 1920 && val <= 2002;
+                                }
+                                break;
+                            }
+                            case "iyr": {
+                                if (int.TryParse(kvp[1], out var val)) {
+                                    fields[kvp[0]] = val >= 2010 && val <= 2020;
+                                }
+                                break;
+                            }
+                            case "eyr": {
+                                if (int.TryParse(kvp[1], out var val)) {
+                                    fields[kvp[0]] = val >= 2020 && val <= 2030;
+                                }
+                                break;
+                            }
+                            case "hgt": {
+                                if (int.TryParse(kvp[1].Substring(0, kvp[1].Length - 2), out var val)) {
+                                    fields[kvp[0]] = (kvp[1].EndsWith("cm") && val >= 150 && val <= 193) || (kvp[1].EndsWith("in") && val >= 59 && val <= 76);
+                                }
+                                break;
+                            }
+                            case "hcl": {
+                                if (kvp[1].Length == 7 && kvp[1][0] == '#') {
+                                   fields[kvp[0]] = int.TryParse(kvp[1].Substring(1), System.Globalization.NumberStyles.HexNumber, null, out _);
+                                }
+                                break;
+                            }
+                            case "ecl": {
+                                fields[kvp[0]] = (new string[] {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}).Contains(kvp[1]);
+                                break;
+                            }
+                            case "pid": {
+                                fields[kvp[0]] = kvp[1].Length == 9 && int.TryParse(kvp[1], out _);
+                                break;
+                            }
+                            case "cid": {
+                                fields[kvp[0]] = true;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            Console.WriteLine($"Day 4-1 Answer: {valid}");
+            Console.WriteLine($"Day 4-2 Answer: {valid2}");
         }
 
         static void Day05() {
