@@ -18,7 +18,7 @@ namespace AdventOfCode2020 {
         }
 
         static string[] GetInputs(byte day, bool blankLines = false) {
-            return File.ReadAllLines($"./input/day-{day:D2}.txt").Where(a => blankLines || a.Length > 0).ToArray();
+            return File.ReadAllLines($"../../../input/day-{day:D2}.txt").Where(a => blankLines || a.Length > 0).ToArray();
         }
 
         static void Day01() {
