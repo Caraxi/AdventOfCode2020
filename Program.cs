@@ -176,6 +176,30 @@ namespace AdventOfCode2020 {
         }
 
         static void Day05() {
+            var inputs = GetInputs(5);
+
+            var found = new bool[128 * 8];
+            var maxId = 0;
+            var minId = found.Length;
+            foreach (var input in inputs) {
+                var id = 0;
+                var s = found.Length / 2;
+                for (var i = 0; i < 10; i++, s/=2) {
+                    if (input[i] == 'B' || input[i] == 'R') id += s;
+                }
+
+                if (id > maxId) maxId = id;
+                if (id < minId) minId = id;
+                found[id] = true;
+            }
+
+            Console.WriteLine($"Day 5-1 Answer: {maxId}");
+
+            for (var i = minId; i < maxId; i++) {
+                if (found[i]) continue;
+                Console.WriteLine($"Day 5-2 Answer: {i}");
+                break;
+            }
         }
 
         static void Day06() {
