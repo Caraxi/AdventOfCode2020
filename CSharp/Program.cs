@@ -203,6 +203,40 @@ namespace AdventOfCode2020 {
         }
 
         static void Day06() {
+            var inputs = GetInputs(6, true);
+            var any = 0;
+            var all = 0;
+
+            var groupAnswers = new int[127];
+            var groupCount = 0;
+            foreach (var person in inputs) {
+                if (person.Length == 0) {
+                    Console.WriteLine("-- End Group --");
+                    foreach (var a in groupAnswers) {
+                        if (a > 0) any++;
+                        if (a == groupCount) all++;
+                    }
+                    groupAnswers = new int[127];
+                    groupCount = 0;
+                    continue;
+                }
+
+                Console.WriteLine($"Person: {person}");
+                groupCount++;
+                foreach (var c in person) {
+                    groupAnswers[c]++;
+                }
+            }
+
+            if (groupCount > 0) {
+                foreach (var a in groupAnswers) {
+                    if (a > 0) any++;
+                    if (a == groupCount) all++;
+                }
+            }
+
+            Console.WriteLine($"Day 6-1 Answer: {any}");
+            Console.WriteLine($"Day 6-2 Answer: {all}");
         }
 
         static void Day07() {
