@@ -238,6 +238,39 @@ namespace AdventOfCode2020 {
         }
 
         static void Day07() {
+            var inputs = GetInputs(7, s => s.Split(' ', ',', '.'));
+            var bagDictionary = new System.Collections.Generic.Dictionary<string, (int num, string color)[]>();
+            
+            foreach (var input in inputs) {
+                var bagColor = $"{input[0]} {input[1]}";
+                var bags = new (int num, string color)[(input.Length - 4) / 5];
+                bagDictionary.Add(bagColor, bags);
+
+                for (var i = 0; i < bags.Length; i++) {
+                    bags[i].num = int.Parse(input[4 + (5 * i)]);
+                    bags[i].color = $"{input[5 + (5 * i)]} {input[6 + (5 * i)]}";
+                }
+            }
+
+            System.Collections.Generic.List<string> CanContain(string bagColor) {
+                var list = new System.Collections.Generic.List<string>();
+                var canHoldBag = bagDictionary
+                    .Where(a => a.Value.Any(b => b.color == bagColor))
+                    .Select(a => a.Key);
+                foreach (var a in canHoldBag) {
+                    if (!list.Contains(a)) list.Add(a);
+                    foreach (var b in CanContain(a).Where(b => !list.Contains(b))) {
+                        list.Add(b);
+                    }
+                }
+
+                return list;
+            }
+
+            int MustContain(string bagColor) => bagDictionary[bagColor].Sum(bag => bag.num + MustContain(bag.color) * bag.num);
+
+            Console.WriteLine($"Day 7-1 Answer: {CanContain("shiny gold").Count}");
+            Console.WriteLine($"Day 7-2 Answer: {MustContain("shiny gold")}");
         }
 
         static void Day08() {
