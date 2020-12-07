@@ -211,7 +211,6 @@ namespace AdventOfCode2020 {
             var groupCount = 0;
             foreach (var person in inputs) {
                 if (person.Length == 0) {
-                    Console.WriteLine("-- End Group --");
                     foreach (var a in groupAnswers) {
                         if (a > 0) any++;
                         if (a == groupCount) all++;
@@ -221,7 +220,6 @@ namespace AdventOfCode2020 {
                     continue;
                 }
 
-                Console.WriteLine($"Person: {person}");
                 groupCount++;
                 foreach (var c in person) {
                     groupAnswers[c]++;
